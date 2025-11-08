@@ -1,17 +1,23 @@
-import {
-	GoogleGenAI,
-	type ContentListUnion,
-	type GenerateContentParameters,
-} from '@google/genai'
+import { GoogleGenAI, type GenerateContentParameters } from '@google/genai'
+import { parseArgs } from 'util'
 
 const apiKey = process.env.GEMINI_API_KEY
 
+const { values, positionals } = parseArgs({
+	args: Bun.argv,
+	options: {
+		verbose: { type: 'boolean' },
+	},
+	allowPositionals: true,
+})
+
 /**
+ * `positionals` is somewhat analagous to `Bun.argv`
  * Bun.argv[0] is the path to the Bun executable
  * Bun.argv[1] is the path to this script
  * Bun.argv[2] onwards are CLI arguments
  */
-const prompt = Bun.argv[2]
+const prompt = positionals[2]
 
 const messages: GenerateContentParameters['contents'] = [
 	{ role: 'user', parts: [{ text: prompt }] },
@@ -24,9 +30,16 @@ const response = await client.models.generateContent({
 	model: 'gemini-2.0-flash-001',
 })
 
+if (values.verbose) {
+	console.log(`\nUser prompt: ${prompt}`)
+}
+
+console.log('\n')
 console.log(response.text)
 
-console.table({
-	'Prompt tokens': response.usageMetadata?.promptTokenCount,
-	'Response tokens': response.usageMetadata?.candidatesTokenCount,
-})
+if (values.verbose) {
+	console.table({
+		'Prompt tokens': response.usageMetadata?.promptTokenCount,
+		'Response tokens': response.usageMetadata?.candidatesTokenCount,
+	})
+}
