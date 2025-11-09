@@ -1,4 +1,3 @@
-import type { Path } from 'typescript'
 import path from 'path'
 import { readdirSync, statSync } from 'fs'
 
