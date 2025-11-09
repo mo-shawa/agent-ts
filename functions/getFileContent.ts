@@ -1,21 +1,16 @@
 import path from 'path'
 import { readFileSync, statSync } from 'fs'
+import { handleError, validatePathInWorkingDirectory } from './utils'
 
 export default function getFileContent(
 	workingDirectory: string,
 	filePath: string
 ) {
 	try {
-		const absoluteWorkingDirectoryPath = path.resolve(workingDirectory)
-		const relativeFilePath = path.join(workingDirectory, filePath)
-
-		const absoluteFilePath = path.resolve(relativeFilePath)
-
-		if (!absoluteFilePath.startsWith(absoluteWorkingDirectoryPath)) {
-			throw Error(
-				`Cannot list "${absoluteFilePath}" as it is outside the permitted working directory`
-			)
-		}
+		const absoluteFilePath = validatePathInWorkingDirectory(
+			workingDirectory,
+			filePath
+		)
 
 		const stats = statSync(absoluteFilePath)
 
@@ -35,6 +30,6 @@ export default function getFileContent(
 
 		return content
 	} catch (error) {
-		if (error instanceof Error) return `Error: ${error.message}`
+		return handleError(error)
 	}
 }
