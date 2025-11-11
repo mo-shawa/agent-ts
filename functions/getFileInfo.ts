@@ -1,5 +1,5 @@
-import path from 'path'
-import { readdirSync, statSync } from 'fs'
+import { readdirSync, statSync } from 'node:fs'
+import path from 'node:path'
 import { handleError, validatePathInWorkingDirectory } from './utils'
 
 export default function getFileInfo(workingDirectory: string, directory = '.') {
@@ -26,7 +26,7 @@ export default function getFileInfo(workingDirectory: string, directory = '.') {
 			const data = {
 				name: child,
 				size: stats.size,
-				isDir: stats.isDirectory(),
+				isDir: stats.isDirectory()
 			}
 
 			outputString += `- ${data.name}: file_size=${data.size} bytes, is_dir=${data.isDir}\n`

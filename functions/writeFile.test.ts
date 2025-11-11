@@ -1,5 +1,5 @@
-import writeFile from './writeFile'
 import { expect, test } from 'bun:test'
+import writeFile from './writeFile'
 
 test('write to lorem.txt', () => {
 	const res = writeFile(

@@ -1,5 +1,5 @@
-import getFileContent from './getFileContent'
 import { expect, test } from 'bun:test'
+import getFileContent from './getFileContent'
 
 test('main.ts file', async () => {
 	const res = await getFileContent('calculator', 'main.ts')

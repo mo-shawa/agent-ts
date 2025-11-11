@@ -1,5 +1,5 @@
+import { writeFileSync } from 'node:fs'
 import { handleError, validatePathInWorkingDirectory } from './utils'
-import { writeFileSync } from 'fs'
 
 export default function writeFile(
 	workingDirectory: string,

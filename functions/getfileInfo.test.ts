@@ -1,5 +1,5 @@
-import getFilesInfo from './getFileInfo'
 import { expect, test } from 'bun:test'
+import getFilesInfo from './getFileInfo'
 
 test('current directory', async () => {
 	const res = await getFilesInfo('calculator', '.')
