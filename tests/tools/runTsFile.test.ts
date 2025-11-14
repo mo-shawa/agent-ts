@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'bun:test'
 import path from 'node:path'
-import runTsFile from './runTsFile'
+import runTsFile from '../../src/tools/execution/runTsFile'
 
-const WORKING_DIR = path.resolve(import.meta.dir, '..')
+const WORKING_DIR = path.resolve(import.meta.dir, '../../src/examples')
 
 describe('runTsFile', () => {
 	test('should print usage instructions when running calculator without args', async () => {
@@ -22,7 +22,10 @@ describe('runTsFile', () => {
 	})
 
 	test('should error when running test files directly (tests need bun test)', async () => {
-		const result = await runTsFile(WORKING_DIR, 'calculator/tests.ts')
+		const result = await runTsFile(
+			path.resolve(import.meta.dir, '../examples'),
+			'calculator.test.ts'
+		)
 
 		expect(result).toContain('Error')
 		expect(result).toContain('Cannot use describe outside of the test runner')

@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from 'bun:test'
-import { Calculator } from './pkg/calculator'
+import { Calculator } from '../../src/examples/calculator/pkg/calculator'
 
 describe('TestCalculator', () => {
 	let calculator: Calculator

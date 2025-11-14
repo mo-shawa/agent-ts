@@ -1,6 +1,6 @@
 {
 	"name": "agent-ts",
-	"module": "index.ts",
+	"module": "src/index.ts",
 	"type": "module",
 	"scripts": {
 		"biome": "biome check --write",

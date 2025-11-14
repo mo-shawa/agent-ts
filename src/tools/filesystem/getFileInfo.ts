@@ -1,6 +1,6 @@
 import { readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
-import { handleError, validatePathInWorkingDirectory } from './utils'
+import { handleError, validatePathInWorkingDirectory } from '../utils'
 
 export default function getFileInfo(workingDirectory: string, directory = '.') {
 	try {

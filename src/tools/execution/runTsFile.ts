@@ -1,4 +1,4 @@
-import { handleError, validatePathInWorkingDirectory } from './utils'
+import { handleError, validatePathInWorkingDirectory } from '../utils'
 
 export default async function runTsFile(
 	workingDirectory: string,

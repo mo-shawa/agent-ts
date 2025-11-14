@@ -1,5 +1,5 @@
 import { readFileSync, statSync } from 'node:fs'
-import { handleError, validatePathInWorkingDirectory } from './utils'
+import { handleError, validatePathInWorkingDirectory } from '../utils'
 
 export default function getFileContent(
 	workingDirectory: string,
