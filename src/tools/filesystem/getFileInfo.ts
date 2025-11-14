@@ -1,5 +1,6 @@
 import { readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
+import { type FunctionDeclaration, Type } from '@google/genai'
 import { handleError, validatePathInWorkingDirectory } from '../utils'
 
 export default function getFileInfo(workingDirectory: string, directory = '.') {
@@ -35,5 +36,24 @@ export default function getFileInfo(workingDirectory: string, directory = '.') {
 		return outputString
 	} catch (error) {
 		return handleError(error)
+	}
+}
+
+export const SchemaGetFileInfo: FunctionDeclaration = {
+	name: 'getFileInfo',
+
+	description:
+		'Lists files in the specified directory along with their sizes, constrained to the working directory.',
+
+	parameters: {
+		type: Type.OBJECT,
+
+		properties: {
+			directory: {
+				type: Type.STRING,
+				description:
+					'The directory to list files from, relative to the working directory. If not provided, lists files in the working directory itself.'
+			}
+		}
 	}
 }

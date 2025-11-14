@@ -1,5 +1,11 @@
 import { parseArgs } from 'node:util'
-import { type GenerateContentParameters, GoogleGenAI } from '@google/genai'
+import {
+	type GenerateContentParameters,
+	GoogleGenAI,
+	type Tool
+} from '@google/genai'
+import { SYSTEM_PROMPT } from './config/prompts'
+import { SchemaGetFileInfo } from './tools/filesystem/getFileInfo'
 
 const apiKey = process.env.GEMINI_API_KEY
 
@@ -23,11 +29,16 @@ const messages: GenerateContentParameters['contents'] = [
 	{ role: 'user', parts: [{ text: prompt }] }
 ]
 
+const availableFunctions: Tool = {
+	functionDeclarations: [SchemaGetFileInfo]
+}
+
 const client = new GoogleGenAI({ apiKey })
 
 const response = await client.models.generateContent({
 	contents: messages,
-	model: 'gemini-2.0-flash-001'
+	model: 'gemini-2.0-flash-001',
+	config: { systemInstruction: SYSTEM_PROMPT, tools: [availableFunctions] }
 })
 
 if (values.verbose) {
@@ -36,6 +47,14 @@ if (values.verbose) {
 
 console.log('\n')
 console.log(response.text)
+
+if (response.functionCalls) {
+	for (const call of response.functionCalls) {
+		console.log(
+			`\nCalling function: ${call.name}(${JSON.stringify(call.args)})`
+		)
+	}
+}
 
 if (values.verbose) {
 	console.table({
